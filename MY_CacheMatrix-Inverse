@@ -1,0 +1,40 @@
+## Preliminary setup in Rstudio 
+getwd()
+setwd("C:/Users/ADMIN/Documents/R/Rprogramming")
+getwd()
+dir()
+list(dir())
+
+## The makeCacheMatrix funcion below will create the matrix, then it will set and get the matrix. It will also set and get the inverse of matrix.
+
+makeCacheMatrix <- function(m = matrix()) {
+  MatInv <- NULL
+  
+  setinverse <- function(matrix = matrix()){
+    m <<- matrix
+  }
+  
+  getMatrix <- function() m
+  
+  Inverse <- function(matxInverse = matrix()){ 
+    MatInv <<- matxInverse
+  } 
+  getInverse <- function() MatInv
+  list(get = getMatrix, set = setMatrix, getI = getInverse, setI = setInverse)
+}
+
+
+
+## Compute the inverse of the above special matrix only if it wasnt computed before
+
+cacheSolve <- function(m, ...) {
+  ## Return a matrix that is the inverse of 'm' 
+  
+  if(is.null(m$getI())){
+    print("Not cached. Recomputing...") 
+    m$setI(solve(m$get()))
+  }else {print("Found in cache")}
+  
+  m$getI()
+}
+
